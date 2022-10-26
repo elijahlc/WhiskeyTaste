@@ -1,6 +1,9 @@
+const conn = require('.');
 const { Distillery, Whiskey, User, Tasting } = require('./associations');
 
 const seed = async () => {
+	await conn.sync({ force: true });
+
 	const batsonRiver = await Distillery.create({
 		name: 'Batson River',
 	});
@@ -20,7 +23,7 @@ const seed = async () => {
 		lastName: 'Cohen',
 	});
 
-	await Tasting.create({
+	const tasting = await Tasting.create({
 		whiskeyId: langsfordRoad.id,
 		userId: eli.id,
 		date: '2019-05-28',
@@ -33,6 +36,8 @@ const seed = async () => {
 		youthful: true,
 		sweet: true,
 	});
+
+	return { batsonRiver, langsfordRoad, eli, tasting };
 };
 
-module.exports = seed;
+module.exports = { seed };

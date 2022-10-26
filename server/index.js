@@ -1,10 +1,8 @@
-const conn = require('../db');
 const app = require('./app');
 const seed = require('../db/seed');
 
 async function init() {
 	try {
-		await conn.sync({ force: true });
 		await seed();
 	} catch (err) {
 		console.log(err);

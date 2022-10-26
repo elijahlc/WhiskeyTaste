@@ -1,5 +1,9 @@
 const conn = require('..');
 const Sequelize = require('sequelize');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const JWT = process.env.JWT;
+
 const { UUID, UUIDV4, STRING } = Sequelize;
 
 const User = conn.define('user', {
@@ -48,6 +52,11 @@ const User = conn.define('user', {
 			},
 		},
 	},
+});
+
+User.addHook('beforeSave', async (user) => {
+	if (user.changed('password'))
+		user.password = await bcrypt.hash(user.password, 12);
 });
 
 module.exports = User;
