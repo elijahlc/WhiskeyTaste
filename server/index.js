@@ -1,7 +1,7 @@
 const app = require('./app');
 const seed = require('../db/seed');
 
-async function init() {
+const init = async () => {
 	try {
 		await seed();
 	} catch (err) {
@@ -9,7 +9,8 @@ async function init() {
 	}
 
 	const port = process.env.PORT || 3000;
+
 	app.listen(port, () => console.log(`app listening on port ${port}`));
-}
+};
 
 init();

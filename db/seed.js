@@ -1,4 +1,5 @@
 const conn = require('.');
+
 const { Distillery, Whiskey, User, Tasting } = require('./associations');
 
 const seed = async () => {
@@ -40,4 +41,4 @@ const seed = async () => {
 	return { batsonRiver, langsfordRoad, eli, tasting };
 };
 
-module.exports = { seed };
+module.exports = seed;
