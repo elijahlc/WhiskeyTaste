@@ -4,6 +4,15 @@ const jwt = require('jsonwebtoken');
 const { Distillery, Whiskey, User, Tasting } = require('../db/associations');
 const app = require('supertest')(require('../server/app'));
 
+try {
+	require('../secrets');
+} catch (ex) {
+	console.log(ex);
+	console.log(
+		'if running locally add secrets.js file which sets environment variables for JWT'
+	);
+}
+
 describe('Authentication', () => {
 	let seededData;
 

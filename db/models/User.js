@@ -3,6 +3,17 @@ const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+try {
+	require('../secrets');
+} catch (ex) {
+	console.log(ex);
+	console.log(
+		'if running locally add secrets.js file which sets environment variables for JWT'
+	);
+}
+
+console.log(process.env.JWT);
+
 const { UUID, UUIDV4, STRING } = Sequelize;
 
 const User = conn.define('user', {

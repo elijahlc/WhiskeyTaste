@@ -41,4 +41,4 @@ const seed = async () => {
 	return { batsonRiver, langsfordRoad, eli, tasting };
 };
 
-module.exports = seed;
+module.exports = { seed: seed };
