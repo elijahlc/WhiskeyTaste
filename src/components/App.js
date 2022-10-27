@@ -3,7 +3,17 @@ import { Link, Routes, Route } from 'react-router-dom';
 import Register from './Register';
 
 const App = () => {
-	return <div>Hello world</div>;
+	return (
+		<div>
+			<nav>
+				<Link to="/register">Register</Link>
+			</nav>
+
+			<Routes>
+				<Route path="/register" element={<Register />} />
+			</Routes>
+		</div>
+	);
 };
 
 export default App;

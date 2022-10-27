@@ -2,10 +2,6 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import axios from 'axios';
 
-const users = (state = [], action) => {
-	return state;
-};
-
 const distilleries = (state = [], action) => {
 	return state;
 };
@@ -19,7 +15,6 @@ const tastings = (state = [], action) => {
 };
 
 const reducer = combineReducers({
-	users,
 	distilleries,
 	whiskeys,
 	tastings,
