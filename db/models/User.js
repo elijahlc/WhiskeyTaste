@@ -73,6 +73,7 @@ User.findByToken = async function (token) {
 		const user = await this.findByPk(id);
 		return user;
 	} catch (err) {
+		console.log(err);
 		const error = new Error('Incorrect username or password');
 		error.status = 401;
 		throw error;

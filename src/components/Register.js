@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Register = () => {
+const Register = ({ login }) => {
+	const navigate = useNavigate();
+
 	const [details, setDetails] = useState({
 		firstName: '',
 		lastName: '',
@@ -15,8 +17,12 @@ const Register = () => {
 
 		try {
 			const response = await axios.post('/api/users', details);
-			console.log(response.data);
+			await login({
+				email: details.email,
+				password: details.password,
+			});
 			setDetails({ firstName: '', lastName: '', email: '', password: '' });
+			navigate('/');
 		} catch (err) {
 			console.log(err);
 		}
@@ -67,7 +73,7 @@ const Register = () => {
 				/>
 				<button>Create account</button>
 				<div>
-					Have an account? <Link>Sign in</Link>
+					Have an account? <Link to="/login">Sign in</Link>
 				</div>
 			</form>
 		</div>
