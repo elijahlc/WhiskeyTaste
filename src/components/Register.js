@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './App.css';
 
 const Register = ({ login }) => {
 	const navigate = useNavigate();
@@ -29,29 +30,32 @@ const Register = ({ login }) => {
 	};
 
 	return (
-		<div>
-			<Link to="/">Go home</Link>
+		<div className="LoginRegister">
 			<form onSubmit={createAndLogin}>
 				<h1>Create your WhiskeyTaste account </h1>
-				<div>
-					<label htmlFor="firstName">First name</label>
-					<input
-						type="text"
-						id="firstName"
-						onChange={(e) => {
-							setDetails({ ...details, firstName: e.target.value });
-						}}
-						value={details.firstName}
-					/>
-					<label htmlFor="lastName">Last name</label>
-					<input
-						type="text"
-						id="lastName"
-						onChange={(e) => {
-							setDetails({ ...details, lastName: e.target.value });
-						}}
-						value={details.lastName}
-					/>
+				<div className="LoginRegister-HorizontalContainer">
+					<div className="LoginRegister-Horizontal">
+						<label htmlFor="firstName">First name</label>
+						<input
+							type="text"
+							id="firstName"
+							onChange={(e) => {
+								setDetails({ ...details, firstName: e.target.value });
+							}}
+							value={details.firstName}
+						/>
+					</div>
+					<div className="LoginRegister-Horizontal">
+						<label htmlFor="lastName">Last name</label>
+						<input
+							type="text"
+							id="lastName"
+							onChange={(e) => {
+								setDetails({ ...details, lastName: e.target.value });
+							}}
+							value={details.lastName}
+						/>
+					</div>
 				</div>
 				<label htmlFor="email">Email</label>
 				<input
@@ -72,10 +76,10 @@ const Register = ({ login }) => {
 					value={details.password}
 				/>
 				<button>Create account</button>
-				<div>
-					Have an account? <Link to="/login">Sign in</Link>
-				</div>
 			</form>
+			<div className="LoginRegister-Reroute">
+				Have an account? <Link to="/login">Sign in</Link>
+			</div>
 		</div>
 	);
 };

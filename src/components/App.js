@@ -3,6 +3,7 @@ import { Link, Routes, Route, useNavigate } from 'react-router-dom';
 import Register from './Register';
 import Login from './Login';
 import axios from 'axios';
+import './App.css';
 
 const App = () => {
 	const navigate = useNavigate();
@@ -40,11 +41,13 @@ const App = () => {
 	}, []);
 
 	return (
-		<div>
+		<div className="App">
 			<nav>
-				<Link to="/">🥃</Link>
-				<Link to="/distilleries">Distilleries</Link>
-				<Link to="/whiskeys">Whiskeys</Link>
+				<Link to="/">Whiskey🥃Taste</Link>
+				<div>
+					<Link to="/distilleries">Distilleries</Link>
+					<Link to="/whiskeys">Whiskeys</Link>
+				</div>
 				{auth ? (
 					<button onClick={logout}>Log out</button>
 				) : (
