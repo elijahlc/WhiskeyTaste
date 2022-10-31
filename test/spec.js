@@ -7,7 +7,6 @@ const app = require('supertest')(require('../server/app'));
 try {
 	require('../secrets');
 } catch (ex) {
-	console.log(ex);
 	console.log(
 		'if running locally add secrets.js file which sets environment variables for JWT'
 	);
@@ -97,5 +96,39 @@ describe('Authentication', () => {
 				});
 			});
 		});
+	});
+});
+
+describe('Logging tastings', () => {
+	let seededData;
+
+	beforeEach(async () => {
+		seededData = await seed();
+	});
+
+	describe("Getting a user's tastings", () => {
+		describe('If the user has tastings logged', () => {
+			it("Returns the user's tastings", async () => {
+				const tastings = await seededData.eli.getTastings();
+				expect(tastings.length).to.equal(1);
+			});
+		});
+
+		describe('If the user has no tastings logged', () => {
+			it('Returns an empty array of tastings', async () => {
+				const chelsea = await User.create({
+					email: 'cskone@wellesley.edu',
+					password: 'monkey2',
+					firstName: 'Chelsea',
+					lastName: 'Cohen',
+				});
+				const tastings = await chelsea.getTastings();
+				expect(tastings.length).to.equal(0);
+			});
+		});
+	});
+
+	describe('Creating a tasting', () => {
+		it('Adds a tasting', () => {});
 	});
 });

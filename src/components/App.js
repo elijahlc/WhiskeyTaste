@@ -1,63 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, Routes, Route, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { loginWithToken, logout } from '../store';
 import Register from './Register';
 import Login from './Login';
-import axios from 'axios';
 import './App.css';
 
 const App = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
-	const [auth, setAuth] = useState(false);
-
-	const login = async (credentials) => {
-		try {
-			const response = await axios.post('/api/auth', credentials);
-			window.localStorage.setItem('token', response.data);
-			attemptTokenLogin();
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const logout = () => {
-		window.localStorage.removeItem('token');
-		setAuth(false);
-	};
-
-	const attemptTokenLogin = async () => {
-		const token = window.localStorage.getItem('token');
-
-		if (token) {
-			const response = await axios.get('/api/auth', {
-				headers: { authorization: token },
-			});
-			setAuth(true);
-		}
-	};
+	const { auth } = useSelector((state) => state);
 
 	useEffect(() => {
-		attemptTokenLogin();
+		dispatch(loginWithToken());
 	}, []);
 
 	return (
 		<div className="App">
 			<nav>
-				<Link to="/">Whiskey🥃Taste</Link>
+				<Link to="/">🥃WhiskeyTaste</Link>
 				<div>
+					<Link to="/tastings">My Tastings</Link>
 					<Link to="/distilleries">Distilleries</Link>
 					<Link to="/whiskeys">Whiskeys</Link>
 				</div>
-				{auth ? (
-					<button onClick={logout}>Log out</button>
+				{auth.id ? (
+					<span>
+						<button onClick={() => dispatch(logout())}>Log out</button>
+					</span>
 				) : (
-					<button onClick={() => navigate('/login')}>Sign in</button>
+					<span>
+						<button onClick={() => navigate('/login')}>
+							Sign in <i className="fa-solid fa-angle-right"></i>
+						</button>
+					</span>
 				)}
 			</nav>
 
 			<Routes>
-				<Route path="/register" element={<Register login={login} />} />
-				<Route path="/login" element={<Login login={login} />} />
+				<Route path="/register" element={<Register />} />
+				<Route path="/login" element={<Login />} />
 			</Routes>
 		</div>
 	);

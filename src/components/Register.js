@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { attemptLogin } from '../store';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import './App.css';
 
-const Register = ({ login }) => {
+const Register = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const [details, setDetails] = useState({
 		firstName: '',
@@ -13,20 +16,19 @@ const Register = ({ login }) => {
 		password: '',
 	});
 
+	const onChange = (e) => {
+		setDetails({ ...details, [e.target.name]: e.target.value });
+	};
+
 	const createAndLogin = async (e) => {
 		e.preventDefault();
 
-		try {
-			const response = await axios.post('/api/users', details);
-			await login({
-				email: details.email,
-				password: details.password,
-			});
-			setDetails({ firstName: '', lastName: '', email: '', password: '' });
-			navigate('/');
-		} catch (err) {
-			console.log(err);
-		}
+		await axios.post('/api/users', details);
+		dispatch(
+			attemptLogin({ email: details.email, password: details.password })
+		);
+		setDetails({ firstName: '', lastName: '', email: '', password: '' });
+		navigate('/');
 	};
 
 	return (
@@ -39,9 +41,8 @@ const Register = ({ login }) => {
 						<input
 							type="text"
 							id="firstName"
-							onChange={(e) => {
-								setDetails({ ...details, firstName: e.target.value });
-							}}
+							name="firstName"
+							onChange={onChange}
 							value={details.firstName}
 						/>
 					</div>
@@ -50,9 +51,8 @@ const Register = ({ login }) => {
 						<input
 							type="text"
 							id="lastName"
-							onChange={(e) => {
-								setDetails({ ...details, lastName: e.target.value });
-							}}
+							name="lastName"
+							onChange={onChange}
 							value={details.lastName}
 						/>
 					</div>
@@ -61,18 +61,16 @@ const Register = ({ login }) => {
 				<input
 					type="text"
 					id="email"
-					onChange={(e) => {
-						setDetails({ ...details, email: e.target.value });
-					}}
+					name="email"
+					onChange={onChange}
 					value={details.email}
 				/>
 				<label htmlFor="password">Password</label>
 				<input
 					type="password"
 					id="password"
-					onChange={(e) => {
-						setDetails({ ...details, password: e.target.value });
-					}}
+					name="password"
+					onChange={onChange}
 					value={details.password}
 				/>
 				<button>Create account</button>

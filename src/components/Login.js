@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
+import { attemptLogin } from '../store';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import './App.css';
 
-const Login = ({ login }) => {
+const Login = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const [credentials, setCredentials] = useState({
 		email: '',
 		password: '',
 	});
 
+	const onChange = (e) => {
+		setCredentials({ ...credentials, [e.target.name]: e.target.value });
+	};
+
 	const onSubmit = async (e) => {
 		e.preventDefault();
-
-		try {
-			await login({ email: credentials.email, password: credentials.password });
-			setCredentials({ email: '', password: '' });
-			navigate('/');
-		} catch (err) {
-			console.log(err);
-		}
+		dispatch(attemptLogin(credentials));
+		navigate('/');
 	};
 
 	return (
@@ -31,18 +31,16 @@ const Login = ({ login }) => {
 				<input
 					type="text"
 					id="email"
-					onChange={(e) => {
-						setCredentials({ ...credentials, email: e.target.value });
-					}}
+					name="email"
+					onChange={onChange}
 					value={credentials.email}
 				/>
 				<label htmlFor="password">Password</label>
 				<input
 					type="password"
 					id="password"
-					onChange={(e) => {
-						setCredentials({ ...credentials, password: e.target.value });
-					}}
+					name="password"
+					onChange={onChange}
 					value={credentials.password}
 				/>
 				<button>Sign in</button>

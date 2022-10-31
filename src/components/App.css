@@ -20,6 +20,7 @@ button:hover {
 	margin: 1rem;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 
 .App nav div {
@@ -29,13 +30,37 @@ button:hover {
 }
 
 .App nav > a,
-.App nav > button {
+.App nav > span {
 	flex: 1;
 }
 
 .App nav a {
 	text-decoration: none;
-	color: #fff;
+	color: #f7f5f8;
+	font-weight: 500;
+}
+
+.App nav span {
+	display: flex;
+	justify-content: center;
+}
+
+.App nav button {
+	font-size: 1rem;
+	border: none;
+	background-color: rgba(255, 255, 255, 0.75);
+	color: #121619;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	border-radius: 16px;
+	transition-property: background-color;
+	transition-duration: 1s;
+}
+
+.App nav button:hover {
+	background-color: rgba(255, 255, 255, 1);
 }
 
 .LoginRegister {
@@ -95,12 +120,18 @@ button:hover {
 
 .LoginRegister form button {
 	padding: 0.5rem;
-	background-color: #12343f;
+	background-color: #183e4a;
 	color: #f7f5f8;
 	box-sizing: border-box;
 	border: none;
 	border-radius: 3px;
 	font-size: 1.025rem;
+	transition-property: background-color;
+	transition-duration: 1s;
+}
+
+.LoginRegister form button:hover {
+	background-color: #121619;
 }
 
 .LoginRegister-Reroute {
