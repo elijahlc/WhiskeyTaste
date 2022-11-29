@@ -26,9 +26,9 @@ export const loginWithToken = () => {
 					authorization: token,
 				},
 			});
-			const { id } = response.data;
+			const { id, email, firstName, lastName } = response.data;
 
-			dispatch({ type: 'auth/set', auth: { id } });
+			dispatch({ type: 'auth/set', auth: { id, email, firstName, lastName } });
 		}
 	};
 };
@@ -42,15 +42,47 @@ export const attemptLogin = (credentials) => {
 };
 
 const distilleries = (state = [], action) => {
+	if (action.type === 'distilleries/set') {
+		return action.distilleries;
+	}
+
 	return state;
+};
+
+export const fetchDistilleries = () => {
+	return async (dispatch) => {
+		const response = await axios.get('/api/distilleries/');
+		dispatch({ type: 'distilleries/set', distilleries: response.data });
+	};
 };
 
 const whiskeys = (state = [], action) => {
+	if (action.type === 'whiskeys/set') {
+		return action.whiskeys;
+	}
+
 	return state;
 };
 
+export const fetchWhiskeys = () => {
+	return async (dispatch) => {
+		const response = await axios.get('/api/whiskeys/');
+		dispatch({ type: 'whiskeys/set', whiskeys: response.data });
+	};
+};
+
 const tastings = (state = [], action) => {
+	if (action.type === 'tastings/set') {
+		return action.tastings;
+	}
 	return state;
+};
+
+export const fetchTastings = (id) => {
+	return async (dispatch) => {
+		const response = await axios.get(`/api/tastings/${id}`);
+		dispatch({ type: 'tastings/set', tastings: response.data });
+	};
 };
 
 const reducer = combineReducers({

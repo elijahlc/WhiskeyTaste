@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loginWithToken, logout } from '../store';
 import Register from './Register';
 import Login from './Login';
+import Home from './Home';
+import Tastings from './Tastings';
 import './App.css';
 
 const App = () => {
@@ -39,8 +41,10 @@ const App = () => {
 			</nav>
 
 			<Routes>
+				<Route path="/" element={<Home />} />
 				<Route path="/register" element={<Register />} />
 				<Route path="/login" element={<Login />} />
+				<Route path="/tastings" element={<Tastings />} />
 			</Routes>
 		</div>
 	);
